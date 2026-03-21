@@ -10,3 +10,9 @@
 - Netflix dashboard - Header - main trailer in the background - Movie Cards
 - GPT Integration
   - Textbox for searching the movie suggestions
+
+# features
+
+- Login Page
+- Sign In and Sign Out
+- Validation for Sign In and Sign Out pages
