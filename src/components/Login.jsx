@@ -1,8 +1,16 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import validate from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import auth from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [message, setMessage] = useState("");
 
@@ -17,6 +25,51 @@ export const Login = () => {
   const handleFormSubmit = () => {
     const message = validate(email.current.value, password.current.value);
     setMessage(message);
+    if (message) return;
+
+    if (!isLoggedIn) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:
+              "https://upload.wikimedia.org/wikipedia/commons/2/25/Rahul_Dravid_in_PMO_New_Delhi.jpg",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(addUser({ uid, email, displayName, photoURL }));
+            })
+            .catch((error) => {
+              setMessage(error.message);
+              // ...
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setMessage(errorCode + " " + errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setMessage(errorCode + " " + errorMessage);
+        });
+    }
   };
   return (
     <>
@@ -35,7 +88,7 @@ export const Login = () => {
           >
             <h1 className="text-white text-3xl font-bold mb-4">
               {" "}
-              {isLoggedIn ? "Sign In" : "Sign Out"}
+              {isLoggedIn ? "Sign In" : "Sign up"}
             </h1>
 
             <input
@@ -67,7 +120,7 @@ export const Login = () => {
               onClick={handleFormSubmit}
               className="bg-red-600 hover:bg-red-700 text-white py-3 cursor-pointer rounded font-semibold"
             >
-              {isLoggedIn ? "Sign In" : "Sign Out"}
+              {isLoggedIn ? "Sign In" : "Sign Up"}
             </button>
             {isLoggedIn && (
               <p className="py-4 text-1xl text-white">

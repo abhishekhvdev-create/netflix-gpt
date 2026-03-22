@@ -16,3 +16,6 @@
 - Login Page
 - Sign In and Sign Out
 - Validation for Sign In and Sign Out pages
+- registering app in the firebase
+- configuring firebase into put project
+- deploying and hosting our app to the firebase and made it live
