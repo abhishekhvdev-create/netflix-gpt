@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import auth from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { NETFLIX_BACKGROUND_IMAGE } from "../utils/constants";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -75,10 +76,7 @@ export const Login = () => {
     <>
       <Header />
       <div className="absolute h-full w-full object-cover">
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/7ea4545e-42d3-4ebf-82fd-0e1984dc6375/web/IN-en-20260316-TRIFECTA-perspective_789c5633-3949-4708-8e6c-8ddfd22ed696_large.jpg"
-          alt="netflix background image"
-        />
+        <img src={NETFLIX_BACKGROUND_IMAGE} alt="netflix background image" />
         <div className="absolute inset-0 flex justify-center items-center">
           <form
             onSubmit={(e) => {
