@@ -39,20 +39,20 @@ const Header = () => {
   return (
     <div
       className="absolute top-0 left-0 w-full h-20 flex items-center px-8 
-                    bg-gradient-to-b from-black to-transparent z-10 justify-between"
+                    bg-linear-to-b from-black to-transparent z-10 justify-between"
     >
       <img className="h-8 md:h-10" src={NETFLIX_LOGO} alt="header_logo" />
 
       {userSlice && (
         <div>
-          <img
+          {/* <img
             className="relative right-10 top-5 h-8 md:h-10"
             src={userSlice?.photoURL}
             alt="profile_logo"
-          />
+          /> */}
 
           <p
-            className="font-bold cursor-pointer underline text-white px-2 relative bottom-8 py-5"
+            className="font-bold cursor-pointer underline text-white px-2 bottom-8 py-2"
             onClick={handleSignout}
           >
             Signout
